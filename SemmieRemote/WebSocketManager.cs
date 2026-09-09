@@ -1,4 +1,6 @@
-﻿using Fleck;
+﻿using System.Security.Authentication;
+using System.Security.Cryptography.X509Certificates;
+using Fleck;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
@@ -19,8 +21,10 @@ public static class WebSocketManager {
 
         Logger.LogInformation("Starting server...");
 
-        var server = new WebSocketServer("ws://0.0.0.0:" + Program.Port);
+        var server = new WebSocketServer("wss://0.0.0.0:" + Program.Port);
 
+        server.Certificate = X509CertificateLoader.LoadPkcs12FromFile("cert.pfx", File.ReadAllText("cert.pass"));
+        server.EnabledSslProtocols = SslProtocols.Tls12 | SslProtocols.Tls13;
         server.ListenerSocket.NoDelay = true;
         server.RestartAfterListenError = true;
 

@@ -15,4 +15,13 @@
         <PackageReference Include="VRChat.OSCQuery" Version="0.0.7" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Update="cert.pfx">
+        <Link>Resources\cert.pfx</Link>
+      </Content>
+      <Content Update="cert.pass">
+        <Link>Resources\cert.pass</Link>
+      </Content>
+    </ItemGroup>
+
 </Project>

@@ -20,14 +20,14 @@ function showStream(ip) {
     }
     connectDiv.hidden = true;
     streamDiv.hidden = false;
-    streamFrame.src = `http://${ip}:8889/vrcbuddycam?controls=false&muted=false&disablepictureinpicture=true`;
+    streamFrame.src = `https://${ip}:8889/vrcbuddycam?controls=false&muted=false&disablepictureinpicture=true`;
 }
 buttonConnect.addEventListener("click", event => {
     buttonConnect.disabled = true;
     errorText.innerText = "";
     let ip = ipInput.value;
     localStorage.setItem("savedIp", ip);
-    ws = new WebSocket(`ws://${ip}:6854`);
+    ws = new WebSocket(`wss://${ip}:6854`);
     let connectionErrorListener = (event) => {
         buttonConnect.disabled = false;
         errorText.innerText = `Failed to connect`;
