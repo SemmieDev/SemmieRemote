@@ -51,7 +51,7 @@ public static class WebSocketManager {
                         break;
                     }
                     case "speed": {
-                        OscManager.Send("Buddy_Cam/Speed", json["speed"]?.Value<float>() ?? 0);
+                        OscManager.Send("Buddy_Cam/Speed", (float) Math.Clamp(json["speed"]?.Value<float>() ?? 0, 0.00001, 1));
                         break;
                     }
                     default: {

@@ -67,7 +67,10 @@ function setSpeed(s) {
     }));
 }
 streamDiv.addEventListener("wheel", event => {
-    setSpeed(Math.max(0, speed - speed * 0.1 * Math.sign(event.deltaY)));
+    let direction = Math.sign(event.deltaY);
+    let delta = Math.max(0.001, speed * 0.1);
+    let newSpeed = speed - delta * direction;
+    setSpeed(Math.max(0, Math.min(1, newSpeed)));
 }, { passive: true });
 function onKey(event, isDown) {
     if (streamDiv.hidden || event.repeat)
