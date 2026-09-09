@@ -107,6 +107,10 @@ public static class WebSocketManager {
                 OscManager.Send("Buddy_Cam/Light", light);
                 return;
             }
+            case "Space": {
+                OscManager.Send("Buddy_Cam/Blip", isDown);
+                return;
+            }
         }
 
         if (key.StartsWith("Digit") && int.TryParse(key[5..], out var digit)) {
