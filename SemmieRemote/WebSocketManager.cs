@@ -10,6 +10,8 @@ namespace SemmieRemote;
 public static class WebSocketManager {
     private static readonly ILogger Logger = Logging.GetLogger("WS Server");
 
+    private static bool light;
+
     public static void Start() {
         FleckLog.LogAction = (level, message, ex) => Logger.Log(level switch {
             Fleck.LogLevel.Debug => LogLevel.Debug,
@@ -93,6 +95,13 @@ public static class WebSocketManager {
             }
             case "KeyR": {
                 OscManager.Send("Buddy_Cam/Move/Reset", isDown);
+                break;
+            }
+            case "KeyF": {
+                if (!isDown) break;
+
+                light = !light;
+                OscManager.Send("Buddy_Cam/Light", light);
                 break;
             }
         }
