@@ -5,6 +5,7 @@ let errorText = document.getElementById("errorText") as HTMLParagraphElement;
 
 let streamDiv = document.getElementById("stream") as HTMLDivElement;
 let streamFrame = document.getElementById("streamFrame") as HTMLIFrameElement;
+let inputConsumer = document.getElementById("inputConsumer") as HTMLDivElement;
 
 let ws: WebSocket;
 let sensitivity = 0.0003;
@@ -59,13 +60,13 @@ buttonConnect.addEventListener("click", event => {
     });
 });
 
-streamDiv.addEventListener("click", async (event) => {
-    await streamFrame.requestPointerLock({
+inputConsumer.addEventListener("click", async (event) => {
+    await inputConsumer.requestPointerLock({
         unadjustedMovement: true
     });
 });
 
-streamDiv.addEventListener("pointermove", event => {
+inputConsumer.addEventListener("pointermove", event => {
     pitch += event.movementY * sensitivity;
     pitch -= Math.floor(pitch);
 
@@ -88,7 +89,7 @@ function setSpeed(s: number) {
     }));
 }
 
-streamDiv.addEventListener("wheel", event => {
+inputConsumer.addEventListener("wheel", event => {
     let direction = Math.sign(event.deltaY);
     let delta = Math.max(0.001, speed * 0.1);
     let newSpeed = speed - delta * direction;

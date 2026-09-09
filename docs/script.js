@@ -5,6 +5,7 @@ let buttonConnect = document.getElementById("buttonConnect");
 let errorText = document.getElementById("errorText");
 let streamDiv = document.getElementById("stream");
 let streamFrame = document.getElementById("streamFrame");
+let inputConsumer = document.getElementById("inputConsumer");
 let ws;
 let sensitivity = 0.0003;
 let pitch = 0;
@@ -43,12 +44,12 @@ buttonConnect.addEventListener("click", event => {
         });
     });
 });
-streamDiv.addEventListener("click", async (event) => {
-    await streamFrame.requestPointerLock({
+inputConsumer.addEventListener("click", async (event) => {
+    await inputConsumer.requestPointerLock({
         unadjustedMovement: true
     });
 });
-streamDiv.addEventListener("pointermove", event => {
+inputConsumer.addEventListener("pointermove", event => {
     pitch += event.movementY * sensitivity;
     pitch -= Math.floor(pitch);
     yaw += event.movementX * sensitivity;
@@ -66,7 +67,7 @@ function setSpeed(s) {
         speed: speed
     }));
 }
-streamDiv.addEventListener("wheel", event => {
+inputConsumer.addEventListener("wheel", event => {
     let direction = Math.sign(event.deltaY);
     let delta = Math.max(0.001, speed * 0.1);
     let newSpeed = speed - delta * direction;
