@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SemmieRemote</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="script.js" defer></script>
+</head>
+<body>
+
+<div id="connect">
+    <input type="text" id="ipInput" placeholder="Enter IP address...">
+    <button id="buttonConnect">Connect</button>
+    <p id="errorText"></p>
+</div>
+
+<div id="stream" hidden="true" class="fullSize">
+    <iframe
+            id="streamFrame"
+            src="about:blank"
+            frameborder="0"
+            allow="autoplay"
+            scrolling="no"
+            class="fullSize"
+    ></iframe>
+</div>
+
+</body>
+</html>
