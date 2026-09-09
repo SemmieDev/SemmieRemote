@@ -9,6 +9,7 @@ let ws;
 let sensitivity = 0.0003;
 let pitch = 0;
 let yaw = 0;
+let speed = 0.001;
 ipInput.value = localStorage.getItem("savedIp") ?? "";
 function showStream(ip) {
     if (ip == null) {
@@ -58,9 +59,22 @@ streamDiv.addEventListener("pointermove", event => {
         yaw: yaw
     }));
 });
+function setSpeed(s) {
+    speed = s;
+    ws.send(JSON.stringify({
+        type: "speed",
+        speed: speed
+    }));
+}
+streamDiv.addEventListener("wheel", event => {
+    setSpeed(Math.max(0, speed - speed * 0.1 * Math.sign(event.deltaY)));
+}, { passive: true });
 function onKey(event, isDown) {
     if (streamDiv.hidden || event.repeat)
         return;
+    if (event.code === "KeyR") {
+        setSpeed(0.001);
+    }
     ws.send(JSON.stringify({
         type: "key",
         key: event.code,

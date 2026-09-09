@@ -10,6 +10,7 @@ let ws: WebSocket;
 let sensitivity = 0.0003;
 let pitch = 0;
 let yaw = 0;
+let speed = 0.001;
 
 ipInput.value = localStorage.getItem("savedIp") ?? "";
 
@@ -78,8 +79,25 @@ streamDiv.addEventListener("pointermove", event => {
     }));
 });
 
+function setSpeed(s: number) {
+    speed = s;
+
+    ws.send(JSON.stringify({
+        type: "speed",
+        speed: speed
+    }));
+}
+
+streamDiv.addEventListener("wheel", event => {
+    setSpeed(Math.max(0, speed - speed * 0.1 * Math.sign(event.deltaY)));
+}, { passive: true });
+
 function onKey(event: KeyboardEvent, isDown: boolean) {
     if (streamDiv.hidden || event.repeat) return;
+
+    if (event.code === "KeyR") {
+        setSpeed(0.001);
+    }
 
     ws.send(JSON.stringify({
         type: "key",

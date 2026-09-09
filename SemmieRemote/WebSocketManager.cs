@@ -46,7 +46,12 @@ public static class WebSocketManager {
                         break;
                     }
                     case "rotation": {
-                        HandleRotation(json);
+                        OscManager.Send("Buddy_Cam/Move/Pitch", json["pitch"]?.Value<float>() ?? 0);
+                        OscManager.Send("Buddy_Cam/Move/Yaw", json["yaw"]?.Value<float>() ?? 0);
+                        break;
+                    }
+                    case "speed": {
+                        OscManager.Send("Buddy_Cam/Speed", json["speed"]?.Value<float>() ?? 0);
                         break;
                     }
                     default: {
@@ -91,10 +96,5 @@ public static class WebSocketManager {
                 break;
             }
         }
-    }
-
-    private static void HandleRotation(JObject json) {
-        OscManager.Send("Buddy_Cam/Move/Pitch", json["pitch"]?.Value<float>() ?? 0);
-        OscManager.Send("Buddy_Cam/Move/Yaw", json["yaw"]?.Value<float>() ?? 0);
     }
 }
