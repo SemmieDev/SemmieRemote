@@ -67,43 +67,50 @@ public static class WebSocketManager {
 
     private static void HandleKey(JObject json) {
         var isDown = json["isDown"]?.Value<bool>() ?? false;
+        var key = json["key"]?.ToString();
 
-        switch (json["key"]?.ToString()) {
+        if (key == null) return;
+
+        switch (key) {
             case "KeyW": {
                 OscManager.Send("Buddy_Cam/Move/Forward", isDown);
-                break;
+                return;
             }
             case "KeyA": {
                 OscManager.Send("Buddy_Cam/Move/Left", isDown);
-                break;
+                return;
             }
             case "KeyS": {
                 OscManager.Send("Buddy_Cam/Move/Back", isDown);
-                break;
+                return;
             }
             case "KeyD": {
                 OscManager.Send("Buddy_Cam/Move/Right", isDown);
-                break;
+                return;
             }
             case "KeyE": {
                 OscManager.Send("Buddy_Cam/Move/Up", isDown);
-                break;
+                return;
             }
             case "KeyQ": {
                 OscManager.Send("Buddy_Cam/Move/Down", isDown);
-                break;
+                return;
             }
             case "KeyR": {
                 OscManager.Send("Buddy_Cam/Move/Reset", isDown);
-                break;
+                return;
             }
             case "KeyF": {
-                if (!isDown) break;
+                if (!isDown) return;
 
                 light = !light;
                 OscManager.Send("Buddy_Cam/Light", light);
-                break;
+                return;
             }
+        }
+
+        if (key.StartsWith("Digit") && int.TryParse(key[5..], out var digit)) {
+            OscManager.Send("Buddy_Cam/View_Mode", digit);
         }
     }
 }
